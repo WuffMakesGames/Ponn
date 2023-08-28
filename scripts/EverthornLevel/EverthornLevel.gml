@@ -1,8 +1,11 @@
 function EverthornLevel() constructor {
-	
+
 	// variables
-	name = "untitled"
-	width = 128
-	height = 64
+	rooms = []
+	
+	// @public
+	static add_room = function(roomdata) {
+		array_push(rooms,roomdata)
+	}
 	
 }

@@ -7,6 +7,8 @@ function OkaComponentList() : OkaComponentAbstract() constructor {
 	component_align_y = OKA_ALIGN_Y.TOP
 	components_width = 0
 	components_height = 0
+	components_left = 0
+	components_top = 0
 	
 	// @Public
 	static add_component = function(component) {
@@ -41,6 +43,8 @@ function OkaComponentList() : OkaComponentAbstract() constructor {
 		var _offset_y = 0
 		var _width = 0
 		var _height = 0
+		var _min_x = 10000
+		var _min_y = 10000
 		
 		// sort children
 		for (var i = 0; i < array_length(children); i++) {
@@ -93,7 +97,15 @@ function OkaComponentList() : OkaComponentAbstract() constructor {
 					_child.offset_y += _height
 					break;
 			}
+			
+			// update
+			_min_x = min(_child.x, _min_x)
+			_min_y = min(_child.y, _min_y)
 		}
+		
+		components_left = _min_x
+		components_top = _min_y
+		
 	}
 	
 	static __update = function() {
@@ -105,8 +117,13 @@ function OkaComponentList() : OkaComponentAbstract() constructor {
 			var _child = children[i]
 			_child.__render()
 		}
-		//draw_set_color(c_white)
-		//draw_rectangle(x,y,x+components_width,y+components_height,true)
+		
+		if (global.__oka_debug) {
+			draw_set_color(c_red)
+			draw_rectangle(x+1,y+1,x+width-1,y+height-1,true)
+			draw_set_color(c_white)
+			draw_rectangle(components_left,components_top,components_left+components_width,components_top+components_height,true)
+		}
 	}
 	
 }

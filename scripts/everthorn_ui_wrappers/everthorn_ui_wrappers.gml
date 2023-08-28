@@ -27,7 +27,7 @@ function everthorn_button(parent,width,height,text,callback,autosize=false) {
 function everthorn_menubutton(text) {
 	
 	var _panel = oka_new_panel()
-	.set_height("90%")
+	.set_height("100%")
 	.set_y("50%")
 	.set_align_y(OKA_ALIGN_Y.MIDDLE)
 	.set_on_step(function(c) {

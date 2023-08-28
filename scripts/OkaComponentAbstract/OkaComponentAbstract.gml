@@ -105,6 +105,28 @@ function OkaComponentAbstract() constructor {
 		return variable_struct_get(element_variables,name)
 	}
 	
+	static destroy = function() {
+		oka_remove_component(self)
+		remove_parent()
+		destroy_children()
+	}
+	static destroy_children = function() {
+		for (var i = 0; i < array_length(children); i++) {
+			show_debug_message("destroying child...")
+			children[i].destroy()
+		}
+		children = []
+	}
+	static remove_parent = function() {
+		if (!parent) return
+		for (var i = 0; i < array_length(parent.children); i ++) {
+			if (parent.children[i] == self) {
+				array_delete(parent.children,i,1)
+				break;
+			}
+		}
+	}
+	
 	// @Private
 	static __update_component = function() {
 		__update_pos()

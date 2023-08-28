@@ -7,7 +7,12 @@ function oka_init() {
 	_initialized = true
 	
 	global.__oka_manager = noone
+	global.__oka_debug = false
 	instance_create_depth(0,0,0,_oka_controller)
+}
+
+function oka_debugmode_enable(enabled) {
+	global.__oka_debug = enabled
 }
 
 /// @desc Oka Step-Event
@@ -74,11 +79,24 @@ function oka_get_hover() {
 	return false
 }
 
-/// @desc Adds a component to current Oka Manager
+/// @desc Adds a component to the current Oka Manager
 function oka_add_component(component) {
 	var manager = oka_get_manager()
 	if (manager) {
 		array_push(manager.components, component)
+	}
+}
+
+/// @desc Removes a component from the current Oka Manager
+function oka_remove_component(component) {
+	var manager = oka_get_manager()
+	if (!manager) return;
+	
+	for (var i = 0; i < array_length(manager.components); i ++) {
+		if (manager.components[i] == component) {
+			array_delete(manager.components,i,1)
+			break;
+		}
 	}
 }
 

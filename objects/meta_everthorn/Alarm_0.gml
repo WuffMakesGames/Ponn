@@ -1,2 +1,2 @@
 /// @description 
-oka_resize(window_width,window_height)
+oka_resize(WINDOW_WIDTH,WINDOW_HEIGHT)
