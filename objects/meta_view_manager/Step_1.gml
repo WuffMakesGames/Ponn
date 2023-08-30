@@ -5,12 +5,12 @@ global.window_resized = false
 var _last_width = global.window_width
 var _last_height = global.window_height
 
-global.window_width = max(100, WINDOW_WIDTH)
-global.window_height = max(100, WINDOW_HEIGHT)
+var _width = max(100, WINDOW_WIDTH)
+var _height = max(100, WINDOW_HEIGHT)
 
 // update
-var _width = global.window_width
-var _height = global.window_height
+global.window_width = _width
+global.window_height = _height
 
 if (_last_width != _width || _last_height != _height) {
 	surface_resize(application_surface,_width,_height)

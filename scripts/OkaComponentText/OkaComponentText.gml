@@ -2,7 +2,7 @@ function OkaComponentText() : OkaComponentAbstract() constructor {
 	
 	// variables
 	text = ""
-	color = style.high_emphasis
+	blend_color = style.high_emphasis
 	
 	// @Public
 	static set_text = function(text) {
@@ -22,7 +22,7 @@ function OkaComponentText() : OkaComponentAbstract() constructor {
 	}
 	
 	static __render = function() {
-		draw_set_color(color)
+		draw_set_color(blend_color)
 		draw_set_alpha(alpha)
 		draw_text(x,y,text)
 	}

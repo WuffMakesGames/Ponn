@@ -32,7 +32,7 @@ function everthorn_create_level_button(index) {
 		.set_align_x(OKA_ALIGN_X.MIDDLE)
 		.set_custom_var("index",index)
 		.set_on_step(function(c) {
-			var _selected = global.level_selected_id == c.get_custom_var("index")
+			var _selected = global.level_selected == c.get_custom_var("index")
 			var _color = _selected ? style.background : (c.get_hover() ? style.background_menu : style.background_secondary)
 			c.set_color(_color)
 		})
@@ -44,5 +44,5 @@ function everthorn_create_level_button(index) {
 
 /// @desc Loads a level into the editor
 function everthorn_load_level(level_id) {
-	global.level_selected_id = level_id
+	global.level_selected = level_id
 }

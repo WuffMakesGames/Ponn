@@ -1,4 +1,5 @@
 
+/// @ignore
 function __oka_parse_value(val,percentage_value) {
 	if (is_real(val)) {
 		return val

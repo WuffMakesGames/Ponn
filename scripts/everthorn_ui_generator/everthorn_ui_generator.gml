@@ -46,9 +46,12 @@ function ui_populate_levels_panel() {
 }
 
 function ui_generate_inspector_panel() {
+	#macro INSPECTOR_WIDTH_MIN 544
+	#macro INSPECTOR_WIDTH_MAX 944
+	
 	oka_new_panel()
 	.set_round_x(0).set_round_y(0)
-	.set_width(512)
+	.set_width(INSPECTOR_WIDTH_MIN)
 	.set_height("110%")
 	.set_x("100%")
 	.set_align_x(OKA_ALIGN_X.RIGHT)
@@ -58,7 +61,7 @@ function ui_generate_inspector_panel() {
 	.set_list_direction(OKA_LIST_DIRECTION.VERTICAL)
 	.set_x("100%")
 	.set_y(app_sidepanels_top)
-	.set_width(512)
+	.set_width(INSPECTOR_WIDTH_MIN)
 	.set_height("100%")
 	.set_padding(2)
 	.set_align_x(OKA_ALIGN_X.RIGHT)
@@ -66,7 +69,7 @@ function ui_generate_inspector_panel() {
 	.set_can_hover(false)
 	//.set_on_step(function(c) {
 	//	if (c.get_custom_var("dragging")) {
-	//		c.set_width(clamp(window_width-OKA_MOUSE_X, 512, 912))
+	//		c.set_width(clamp(global.window_width-OKA_MOUSE_X, INSPECTOR_WIDTH_MIN, INSPECTOR_WIDTH_MAX))
 	//		c.set_custom_var("dragging", mouse_check_button(mb_left))
 	//		global.cursor_image = cr_size_we
 	//	} else if (point_in_rectangle(OKA_MOUSE_X,OKA_MOUSE_Y,c.x-5,c.y,c.x+5,c.y+c.height)) {
@@ -99,7 +102,29 @@ function ui_populate_inspector_panel() {
 	ui_create_tilemap_tab(inspector_panel)
 }
 function ui_create_tilemap_tab(panel=noone) {
+	global.tile_buttons = []
 	
+	var _tilemap_list = oka_new_list(inspector_panel)
+	.set_list_direction(OKA_LIST_DIRECTION.VERTICAL)
+	.set_padding(2)
+	.set_x("50%")
+	.set_y(16)
+	.set_width(30*17)
+	.set_height(30*8.5)
+	.set_align_x(OKA_ALIGN_X.MIDDLE)
+	
+	// create rows
+	for (var i = 0; i < 8; i++) {
+		var _list = oka_new_list(_tilemap_list)
+		.set_width("100%")
+		.set_height(30)
+		.set_padding(2)
+		
+		// buttons
+		for (var j = 0; j < 16; j++) {
+			array_push(global.tile_buttons, everthorn_tilemap_button(_list,-1,j+i*16))
+		}
+	}
 }
 
 function ui_generate_toolbar() {

@@ -49,6 +49,17 @@ function everthorn_menubutton(text) {
 	return _panel
 }
 
-function everthorn_modal() {
-	
+function everthorn_tilemap_button(list,sprite,index) {
+	var left = (index % 16)*8
+	var top = floor(index / 16)*8
+  
+	return oka_new_sprite(list)
+	.set_custom_var("index",index)
+	.set_width(30)
+	.set_height("100%")
+	.set_sprite(sprite)
+	.set_quad(left,top,8,8)
+	.set_on_mouse_click(function(c) {
+		global.tile_selected = c.get_custom_var("index")
+	})
 }

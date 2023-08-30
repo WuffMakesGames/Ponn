@@ -36,8 +36,8 @@ function oka_update() {
 	}
 	
 	// update hover
-	with (manager.component_hover) { if (manager.component_hover_previous != self && on_mouse_enter) on_mouse_enter(self) }
-	with (manager.component_hover_previous) { if (manager.component_hover != self && on_mouse_exit) on_mouse_exit(self) }
+	with (manager.component_hover) { if (manager.component_hover_previous != self && on_mouse_enter) self.on_mouse_enter(self) }
+	with (manager.component_hover_previous) { if (manager.component_hover != self && on_mouse_exit) self.on_mouse_exit(self) }
 	
 	//if (manager.component_hover != manager.component_hover_previous) {
 		manager.component_hover_previous = manager.component_hover
@@ -49,8 +49,8 @@ function oka_update() {
 	}
 	
 	with (manager.component_focused) {
-		if (OKA_MOUSE_PRESSED_LEFT && on_mouse_click) on_mouse_click(self)
-		else if (OKA_MOUSE_RELEASED_LEFT && on_mouse_release) on_mouse_release(self)
+		if (OKA_MOUSE_PRESSED_LEFT && on_mouse_click) self.on_mouse_click(self)
+		else if (OKA_MOUSE_RELEASED_LEFT && on_mouse_release) self.on_mouse_release(self)
 	}
 }
 
@@ -63,6 +63,8 @@ function oka_render() {
 	for (var i = 0; i < array_length(manager.components); i++) {
 		var c = manager.components[i]
 		if (!c.parent) {
+			draw_set_color(c.blend_color)
+			draw_set_alpha(c.alpha)
 			c.__render()
 		}
 	}

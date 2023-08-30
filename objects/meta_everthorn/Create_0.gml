@@ -7,25 +7,27 @@ style.border_radius_y = 16
 // camera
 instance_create_depth(0,0,0,cam_editor)
 
-// variables
-global.level_selected_id = -1
-global.levels = []
-
-// window
-global.window_resized = true
-global.window_width = max(100, WINDOW_WIDTH)
-global.window_height = max(100, WINDOW_HEIGHT)
-
-// editor
+// editor gui
 global.time_military = false
 global.cursor_image = cr_arrow
+global.cursor_interaction_blocked = false
+
+global.tile_buttons = []
 
 menubar_height = 32
 menubar_margin = 2
 app_sidepanels_top = menubar_height + menubar_margin
 
-// filedata
+// editor variables
+global.pico_data_loaded = false
 global.pico_data = false
+
+global.levels = []
+global.level_selected = -1
+global.room_selected = noone
+
+global.tile_selected = 0
+global.editor_tool = EDITOR_TOOL.brush
 
 // Generate Elements
 ui_generate_levels_panel()
@@ -36,5 +38,3 @@ ui_populate_inspector_panel()
 
 ui_generate_toolbar()
 ui_populate_toolbar()
-
-alarm[0] = 4

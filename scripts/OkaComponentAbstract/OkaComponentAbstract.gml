@@ -2,33 +2,68 @@ function OkaComponentAbstract() constructor {
 	style = oka_get_theme()
 	
 	// variables
+	element_variables = {}
+	children = []
+	
 	align_x = OKA_ALIGN_X.LEFT
 	align_y = OKA_ALIGN_Y.TOP
-	offset_x = 0
-	offset_y = 0
 	static_x = 0
 	static_y = 0
 	x = 0
 	y = 0
+	
+	offset_x = 0
+	offset_y = 0
+	
 	static_width = 100
 	static_height = 100
 	width = 100
 	height = 100
-	children = []
+	
 	parent = noone
-	element_variables = {}
 	can_hover = true
+	
+	blend_color = c_white
 	alpha = 1.0
 	
 	// callbacks
-	on_mouse_enter		= -1
-	on_mouse_exit		= -1
-	on_mouse_click		= -1
-	on_mouse_release	= -1
-	on_resize			= -1
-	on_step				= -1
+	static foo = function() {}
 	
-	// @Public
+	on_mouse_enter		= foo
+	on_mouse_exit		= foo
+	on_mouse_click		= foo
+	on_mouse_release	= foo
+	on_resize			= foo
+	on_step				= foo
+	
+	#region @Public	
+	static destroy = function() {
+		oka_remove_component(self)
+		remove_parent()
+		destroy_children()
+	}
+	static destroy_children = function() {
+		for (var i = 0; i < array_length(children); i++) {
+			show_debug_message("destroying child...")
+			children[i].destroy()
+		}
+		children = []
+	}
+	static remove_parent = function() {
+		if (!parent) return
+		for (var i = 0; i < array_length(parent.children); i ++) {
+			if (parent.children[i] == self) {
+				array_delete(parent.children,i,1)
+				break;
+			}
+		}
+	}
+	static check_hover = function(mx,my) {
+		return can_hover && point_in_rectangle(mx,my,x,y,x+width,y+height)
+	}
+	#endregion
+	
+	#region @Setters
 	static set_x = function(x) {
 		static_x = x
 		return self
@@ -71,6 +106,10 @@ function OkaComponentAbstract() constructor {
 		return self
 	}
 	
+	static set_color = function(color) {
+		self.blend_color = color
+		return self
+	}
 	static set_alpha = function(alpha) {
 		self.alpha = alpha
 		return self
@@ -89,51 +128,38 @@ function OkaComponentAbstract() constructor {
 		can_hover = enabled
 		return self
 	}
-	static get_hover = function() {
-		var manager = oka_get_manager()
-		return manager.component_hover_previous == self && check_hover(OKA_MOUSE_X,OKA_MOUSE_Y)
-	}
-	static check_hover = function(mx,my) {
-		return can_hover && point_in_rectangle(mx,my,x,y,x+width,y+height)
-	}
-	
 	static set_custom_var = function(name,value) {
 		variable_struct_set(element_variables,name,value)
 		return self
+	}
+	
+	#endregion
+	
+	#region @Getters
+	static get_x = function() { return x }
+	static get_y = function() { return y }
+	static get_width = function() { return width }
+	static get_height = function() { return height }
+	static get_align_x = function() { return align_x }
+	static get_align_y = function() { return align_y }
+	
+	static get_hover = function() {
+		var manager = oka_get_manager()
+		return manager.component_hover_previous == self && check_hover(OKA_MOUSE_X,OKA_MOUSE_Y)
 	}
 	static get_custom_var = function(name,value) {
 		return variable_struct_get(element_variables,name)
 	}
 	
-	static destroy = function() {
-		oka_remove_component(self)
-		remove_parent()
-		destroy_children()
-	}
-	static destroy_children = function() {
-		for (var i = 0; i < array_length(children); i++) {
-			show_debug_message("destroying child...")
-			children[i].destroy()
-		}
-		children = []
-	}
-	static remove_parent = function() {
-		if (!parent) return
-		for (var i = 0; i < array_length(parent.children); i ++) {
-			if (parent.children[i] == self) {
-				array_delete(parent.children,i,1)
-				break;
-			}
-		}
-	}
+	#endregion
 	
 	// @Private
 	static __update_component = function() {
+		if (on_step) on_step(self)
 		__update_pos()
 		__update()
 		__update_children()
 		
-		if (on_step) on_step(self)
 	}
 	static __update_children = function() {
 		for (var i = 0; i < array_length(children); i++) {

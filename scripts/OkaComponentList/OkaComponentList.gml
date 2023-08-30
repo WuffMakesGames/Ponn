@@ -115,6 +115,8 @@ function OkaComponentList() : OkaComponentAbstract() constructor {
 	static __render = function() {
 		for (var i = 0; i < array_length(children); i++) {
 			var _child = children[i]
+			draw_set_color(_child.blend_color)
+			draw_set_alpha(_child.alpha)
 			_child.__render()
 		}
 		
@@ -125,5 +127,4 @@ function OkaComponentList() : OkaComponentAbstract() constructor {
 			draw_rectangle(components_left,components_top,components_left+components_width,components_top+components_height,true)
 		}
 	}
-	
 }

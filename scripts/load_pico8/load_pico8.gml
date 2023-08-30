@@ -139,7 +139,7 @@ function load_pico8(filename) {
 			var right = left + width
 			var bottom = top + height
 			
-			var new_room = new EverthornRoom(left,top,width,height)
+			var new_room = new EverthornRoom(left*8,top*8,width,height)
 			
 			// load mapdata
 			if (mapdata[i]) {
