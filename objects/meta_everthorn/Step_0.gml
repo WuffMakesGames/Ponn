@@ -11,7 +11,7 @@ var array = file_dropper_get_files(".p8")
 file_dropper_flush()
 
 if (array_length(array) > 0) {
-    global.pico_data = load_pico8(array[0])
+    global.pico_data_filepath = array[0]
 	event_user(0)
 }
 

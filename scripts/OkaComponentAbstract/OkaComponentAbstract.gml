@@ -25,6 +25,7 @@ function OkaComponentAbstract() constructor {
 	
 	blend_color = c_white
 	alpha = 1.0
+	visible = true
 	
 	// callbacks
 	static foo = function() {}
@@ -36,9 +37,12 @@ function OkaComponentAbstract() constructor {
 	on_resize			= foo
 	on_step				= foo
 	
+	__on_destroy		= foo
+	
 	#region @Public	
 	static destroy = function() {
 		oka_remove_component(self)
+		__on_destroy()
 		remove_parent()
 		destroy_children()
 	}
@@ -59,7 +63,10 @@ function OkaComponentAbstract() constructor {
 		}
 	}
 	static check_hover = function(mx,my) {
-		return can_hover && point_in_rectangle(mx,my,x,y,x+width,y+height)
+		return can_hover && component_check_can_hover() && point_in_rectangle(mx,my,x,y,x+width,y+height)
+	}
+	static component_check_can_hover = function() {
+		return visible && (parent == noone ? true : parent.component_check_can_hover())
 	}
 	#endregion
 	
@@ -114,6 +121,10 @@ function OkaComponentAbstract() constructor {
 		self.alpha = alpha
 		return self
 	}
+	static set_visible = function(visible) {
+		self.visible = visible
+		return self
+	}
 	
 	static set_on_resize = function(callback) {
 		on_resize = callback
@@ -143,6 +154,10 @@ function OkaComponentAbstract() constructor {
 	static get_align_x = function() { return align_x }
 	static get_align_y = function() { return align_y }
 	
+	static get_color = function() { return blend_color }
+	static get_alpha = function() { return alpha }
+	static get_visible = function() { return visible }
+	
 	static get_hover = function() {
 		var manager = oka_get_manager()
 		return manager.component_hover_previous == self && check_hover(OKA_MOUSE_X,OKA_MOUSE_Y)
@@ -165,6 +180,21 @@ function OkaComponentAbstract() constructor {
 		for (var i = 0; i < array_length(children); i++) {
 			var comp = children[i]
 			comp.__update_component()
+		}
+	}
+	static __render_component = function() {
+		if (!visible) return;
+		draw_set_color(blend_color)
+		draw_set_alpha(alpha)
+		__render()
+		__render_children()
+	}
+	static __render_children = function() {
+		for (var i = 0; i < array_length(children); i++) {
+			var _child = children[i]
+			draw_set_color(_child.blend_color)
+			draw_set_alpha(_child.alpha)
+			_child.__render_component()
 		}
 	}
 	static __update_pos = function() {
@@ -207,5 +237,4 @@ function OkaComponentAbstract() constructor {
 				break;
 		}
 	}
-	
 }

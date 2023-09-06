@@ -1,4 +1,9 @@
 
+#macro EVERTHORN_NAME "Everthorn"
+#macro EVERTHORN_VERSION_ID "v0.0.1"
+#macro EVERTHORN_VERSION_NAME EVERTHORN_NAME + " " + EVERTHORN_VERSION_ID
+#macro Debug:EVERTHORN_NAME "Everthorn Debug Build"
+
 // Keyboard
 #macro KEY_MODIFIER_CTRL keyboard_check(vk_control)
 

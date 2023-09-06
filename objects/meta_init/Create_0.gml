@@ -1,6 +1,5 @@
 /// @description 
-
-window_set_caption("Everthorn")
+window_set_caption(EVERTHORN_VERSION_NAME)
 
 // initialize
 oka_init()
@@ -11,5 +10,6 @@ draw_set_font(font_editor)
 //oka_debugmode_enable(true)
 
 // instances
+instance_create_depth(0,0,0,meta_window_manager)
 instance_create_depth(0,0,0,meta_view_manager)
 instance_create_depth(0,0,0,meta_everthorn)

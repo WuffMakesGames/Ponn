@@ -3,12 +3,14 @@ function OkaComponentList() : OkaComponentAbstract() constructor {
 	// variables
 	list_direction = OKA_LIST_DIRECTION.HORIZONTAL
 	padding = 0
-	component_align_x = OKA_ALIGN_X.LEFT
-	component_align_y = OKA_ALIGN_Y.TOP
+	
+	components_top = 0
+	components_left = 0
 	components_width = 0
 	components_height = 0
-	components_left = 0
-	components_top = 0
+	
+	component_align_x = OKA_ALIGN_X.LEFT
+	component_align_y = OKA_ALIGN_Y.TOP
 	
 	// @Public
 	static add_component = function(component) {
@@ -113,13 +115,6 @@ function OkaComponentList() : OkaComponentAbstract() constructor {
 	}
 	
 	static __render = function() {
-		for (var i = 0; i < array_length(children); i++) {
-			var _child = children[i]
-			draw_set_color(_child.blend_color)
-			draw_set_alpha(_child.alpha)
-			_child.__render()
-		}
-		
 		if (global.__oka_debug) {
 			draw_set_color(c_red)
 			draw_rectangle(x+1,y+1,x+width-1,y+height-1,true)

@@ -5,3 +5,9 @@ enum EDITOR_TOOL {
 	rectangle,
 	selection,
 }
+
+enum INSPECTOR_TAB {
+	tilemap,
+	triggers,
+	rooms,
+}

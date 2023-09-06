@@ -25,7 +25,7 @@ function oka_update() {
 		var comp = manager.components[i]
 		
 		// update
-		if (!comp.parent) {
+		if (!comp.parent && comp.visible) {
 			comp.__update_component()
 		}
 		
@@ -57,21 +57,18 @@ function oka_update() {
 /// @desc Oka Draw-Event
 function oka_render() {
 	var manager = oka_get_manager()
-	
+	//CleanBatchBegin()
 	// render components
-	manager.component_hover = noone
 	for (var i = 0; i < array_length(manager.components); i++) {
-		var c = manager.components[i]
-		if (!c.parent) {
-			draw_set_color(c.blend_color)
-			draw_set_alpha(c.alpha)
-			c.__render()
+		var comp = manager.components[i]
+		if (!comp.parent) {
+			comp.__render_component()
 		}
 	}
-	
 	// reset
 	draw_set_color(c_white)
 	draw_set_alpha(1.0)
+	//CleanBatchEndDraw()
 }
 
 /// @desc Returns true if any gui element is hovered
@@ -140,8 +137,7 @@ function oka_create_theme() {
 		medium_emphasis: #9d9d9d,
 		low_emphasis: #454545,
 		accent_regular: #52c139,
-		border_radius_x: 0,
-		border_radius_y: 0,
+		border_radius: 0,
 	}
 }
 

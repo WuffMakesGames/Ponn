@@ -94,7 +94,7 @@ function load_pico8(filename) {
 	var old_flag_begin = string_pos("@begin",code), old_flag_end = string_pos("--@end",code)
 	var format_old = old_flag_begin && old_flag_end
 	
-	if (format_old) {
+	if (!has_format && format_old) {
 		var roomdata = []
 		camera_triggers = []
 		
@@ -105,13 +105,14 @@ function load_pico8(filename) {
 		var level_table_end = string_pos_ext("}",codestring,level_table)+1
 		
 		if (level_table) {
-			var pos = string_pos_ext("\"",codestring,level_table)+1
+			var level_string = string_copy(codestring,level_table,level_table_end-level_table)
+			var pos = string_pos_ext("\"",level_string,1)+1
 			
-			while (pos < level_table_end && pos > level_table) {
-				var line_end = string_pos_ext("\"",codestring,pos+1)
-				var line = string_replace_all(string_copy(codestring,pos,line_end-pos), "\"", "")
+			while (pos <= string_length(level_string) && pos > 1) {
+				var line_end = string_pos_ext("\"",level_string,pos+1)
+				var line = string_replace_all(string_copy(level_string,pos,line_end-pos), "\"", "")
 				
-				pos = string_pos_ext("\"",codestring,line_end+2)+1
+				pos = string_pos_ext("\"",level_string,line_end+2)+1
 				array_push(roomdata,split(line))
 			}
 		}
@@ -119,10 +120,52 @@ function load_pico8(filename) {
 		// load mapdata
 		var mapdata_table = string_pos("mapdata={",codestring)
 		var mapdata_table_end = string_pos_ext("}",codestring,mapdata_table)+1
-		
 		mapdata = array_create(array_length(roomdata),-1)
 		
 		if (mapdata_table) {
+			var mapstring = string_copy(codestring,mapdata_table,mapdata_table_end-mapdata_table)
+			mapstring = string_replace_all(mapstring," ","")
+			mapstring = string_replace_all(mapstring,"\t","")
+			mapstring = string_replace_all(mapstring,"\n","")
+			mapstring = string_replace(mapstring,"mapdata={","")
+			mapstring = string_replace(mapstring,"}","")
+			
+			// parse data
+			var lines = split(mapstring,",")
+			for (var i = 0; i < array_length(lines); i++) {
+				var line = lines[i]
+				var index = i
+				
+				var is_hex = true
+				var hex = ""
+				var is_base256 = false
+				var base256 = ""
+				
+				// parse line
+				if (line == "nil") continue;
+				if (string_starts_with(line,"[")) {
+					index = real(string_copy(line,2,string_pos("]",line)-2))-1
+				}
+				
+				// find data
+				var string_start = string_pos("\"",line)+1
+				var string_end = string_last_pos("\"",line)
+				
+				// parse hex data
+				if (is_hex) {
+					mapdata[index] = []
+					hex = string_copy(line,string_start,string_end-string_start)
+					for (var j = 1; j < string_length(hex); j += 2) {
+						array_push(mapdata[index], from_hex(string_copy(hex,j,2)))
+					}
+				}
+				
+				// parse base 256 (yeah, no.)
+				if (is_base256) {
+					
+				}
+				
+			}
 			
 		}
 		
@@ -142,9 +185,15 @@ function load_pico8(filename) {
 			var new_room = new EverthornRoom(left*8,top*8,width,height)
 			
 			// load mapdata
-			if (mapdata[i]) {
-				show_debug_message("what")
-			} else { // take from map
+			if (mapdata[i] != -1) {
+				for (var j = 0; j < array_length(mapdata[i]); j++) {
+					var tile_x = j % width
+					var tile_y = floor(j / width)
+					new_room.set_tile(tile_x,tile_y,mapdata[i][j])
+				}
+			
+			// take from map
+			} else { 
 				for (var tx = left; tx < right; tx++) {
 					for (var ty = top; ty < bottom; ty++) {
 						new_room.set_tile(tx-left,ty-top,data.map[tx][ty])
