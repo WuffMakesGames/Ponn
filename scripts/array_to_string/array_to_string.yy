@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "Fileio",
-    "path": "folders/Scripts/Fileio.yy",
+    "name": "Helpers",
+    "path": "folders/Scripts/Helpers.yy",
   },
 }

@@ -1,8 +1,12 @@
-/// @description
+/// @description 
 
-alarm[0] = 4
+global.view_default_width = 1280
+global.view_default_height = 720
 
-// variables
-global.window_resized = true
-global.window_width = max(100, WINDOW_WIDTH)
-global.window_height = max(100, WINDOW_HEIGHT)
+// update
+window_reset()
+
+global.view_width = global.view_default_width
+global.view_height = global.view_default_height
+
+event_user(0)

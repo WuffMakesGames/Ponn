@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "Everthorn",
-    "path": "folders/Scripts/Everthorn.yy",
+    "path": "folders/Constructors/Everthorn.yy",
   },
 }

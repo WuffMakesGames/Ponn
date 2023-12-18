@@ -28,7 +28,7 @@ function everthorn_create_level_button(index) {
 		.set_align_x(OKA_ALIGN_X.MIDDLE)
 		.set_custom_var("index",index)
 		.set_on_step(function(c) {
-			var _selected = global.level_selected == c.get_custom_var("index")
+			var _selected = global.app_state.level_selected == c.get_custom_var("index")
 			var _color = _selected ? style.background : (c.get_hover() ? style.background_menu : style.background_secondary)
 			c.set_color(_color)
 		})
@@ -68,8 +68,8 @@ function everthorn_create_new_room() {
 
 /// @desc Loads a level into the editor
 function everthorn_load_level(level_id) {
-	if (level_id == global.level_selected) return;
-	global.level_selected = level_id
+	if (level_id == global.app_state.level_selected) return;
+	global.app_state.level_selected = level_id
 	
 	// generate rooms
 	rooms_list.destroy_children()
@@ -93,7 +93,7 @@ function everthorn_load_level(level_id) {
 }
 
 function everthorn_select_room(room_data) {
-	var _rooms = global.pico_data.levels[global.level_selected].rooms
+	var _rooms = global.pico_data.levels[global.app_state.level_selected].rooms
 	if (room_data) {
 		for (var i = 0; i < array_length(_rooms); i++) {
 			if (_rooms[i] == room_data) {

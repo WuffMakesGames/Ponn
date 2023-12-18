@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "Constructors",
-    "path": "folders/Constructors.yy",
+    "name": "Everthorn",
+    "path": "folders/Constructors/Everthorn.yy",
   },
 }

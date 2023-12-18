@@ -1,21 +1,15 @@
-/// @description 
-global.window_resized = false
+/// @description Window Resize
+var width = max(window_get_width(), 10)
+var height = max(window_get_height(), 10)
 
-// get values
-var _last_width = global.window_width
-var _last_height = global.window_height
+var last_width = global.view_width
+var last_height = global.view_height
 
-var _width = max(100, WINDOW_WIDTH)
-var _height = max(100, WINDOW_HEIGHT)
+global.view_width = width
+global.view_height = height
 
 // update
-global.window_width = _width
-global.window_height = _height
-
-if (_last_width != _width || _last_height != _height) {
-	surface_resize(application_surface,_width,_height)
-	display_set_gui_size(_width,_height)
-	oka_resize(_width,_height)
-	
-	global.window_resized = true
+if (last_width != global.view_width || last_height != global.view_height) {
+	event_dispatch("window_resized",[last_width,last_height,width,height])
+	event_user(0)
 }

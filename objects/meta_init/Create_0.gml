@@ -1,15 +1,15 @@
 /// @description 
-window_set_caption(EVERTHORN_VERSION_NAME)
 
-// initialize
-oka_init()
-draw_set_font(font_editor)
+window_set_caption(APP_NAME)
 
-// debug
-//show_debug_overlay(true)
-//oka_debugmode_enable(true)
+event_manager_initialize()
 
 // instances
-instance_create_depth(0,0,0,meta_window_manager)
+instance_create_depth(0,0,0,meta_cursor)
 instance_create_depth(0,0,0,meta_view_manager)
-instance_create_depth(0,0,0,meta_everthorn)
+
+// init
+event_user(0) // shortcuts
+
+// start
+room_goto(rm_app)
