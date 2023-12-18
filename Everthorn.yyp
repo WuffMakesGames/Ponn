@@ -55,7 +55,7 @@
   "isEcma": false,
   "LibraryEmitters": [],
   "MetaData": {
-    "IDEVersion": "2023.6.0.89",
+    "IDEVersion": "2023.11.0.121",
   },
   "resources": [
     {"id":{"name":"CleanTransformAddMove","path":"scripts/CleanTransformAddMove/CleanTransformAddMove.yy",},},
@@ -142,6 +142,7 @@
   "RoomOrderNodes": [
     {"roomId":{"name":"rm_editor","path":"rooms/rm_editor/rm_editor.yy",},},
   ],
+  "templateType": null,
   "TextureGroups": [
     {"resourceType":"GMTextureGroup","resourceVersion":"1.3","name":"Default","autocrop":true,"border":2,"compressFormat":"bz2","directory":"","groupParent":null,"isScaled":true,"loadType":"default","mipsToGenerate":0,"targets":-1,},
   ],
