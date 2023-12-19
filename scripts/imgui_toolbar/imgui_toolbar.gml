@@ -33,8 +33,8 @@ function imgui_toolbar(){
 	if (imgui.BeginMenu("Edit")) {
 		
 		// elements
-		imgui.MenuItem("Undo",get_shortcut_string("undo"),,false)
-		imgui.MenuItem("Redo",get_shortcut_string("redo"),,false)
+		if (imgui.MenuItem("Undo",get_shortcut_string("undo"),,global.app_history_can_undo)) app_undo()
+		if (imgui.MenuItem("Redo",get_shortcut_string("redo"),,global.app_history_can_redo)) app_redo()
 		
 		imgui.Separator()
 		if (imgui.MenuItem("New Level",get_shortcut_string("new_level"))) {
@@ -72,6 +72,7 @@ function imgui_toolbar(){
 		window_tilemap_open = imgui_toolbar_window_toggle("Tilemap Editor",window_tilemap_open)
 		window_triggers_open = imgui_toolbar_window_toggle("Triggers",window_triggers_open)
 		window_settings_open = imgui_toolbar_window_toggle("Settings",window_settings_open)
+		window_history_open = imgui_toolbar_window_toggle("History",window_history_open)
 	
 		imgui.EndMenu()
 	}

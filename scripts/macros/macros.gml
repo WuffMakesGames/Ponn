@@ -5,6 +5,11 @@
 
 #macro LOAD_PROJECT_TEXT "No Project Loaded"
 
+#macro HISTORY_NOTE_ROOM_RESIZED "Room resized"
+#macro HISTORY_NOTE_ROOM_MOVED "Room moved"
+#macro HISTORY_NOTE_ROOM_CHANGED "Room edited"
+#macro HISTORY_NOTE_ROOM_SELECTED "Room selected"
+
 // viewport
 #macro CAM_DEFAULT view_camera[0]
 #macro VIEW_LEFT camera_get_view_x(CAM_DEFAULT)

@@ -4,7 +4,6 @@
 #macro TILESET_BUTTON_PADDING 2
 
 function imgui_tilemap(window_flags) {
-	
 	var open = imgui.Begin("Tilemap",1,window_flags,ImGuiReturnMask.Both)
 	
 	// methods
@@ -31,11 +30,6 @@ function imgui_tilemap(window_flags) {
 	if (surface_exists(surface)) {
 		var width = surface_get_width(surface)
 		var height = surface_get_height(surface)
-		//imgui.DrawListPushClipRect(list,left,top,left+width,top+height,false)
-		
-		//imgui.DrawListAddRect(list,left,top,left+width,top+height,c_white,5)
-		
-		//imgui.DrawListPopClipRect(list)
 		
 		imgui.Surface(surface)
 	

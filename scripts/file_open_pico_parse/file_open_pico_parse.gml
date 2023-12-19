@@ -77,6 +77,6 @@ function file_open_pico_parse(filename) {
 	
 	// return
 	show_debug_message("> PICO-8 - Finished!")
-	show_debug_message(data)
+	//show_debug_message(data)
 	return data
 }

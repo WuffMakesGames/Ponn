@@ -26,8 +26,10 @@ switch (global.interaction_state) {
 		if (keyboard_check(vk_alt)) global.tool_selected = TOOL_ID.picker
 		if (keyboard_check_released(vk_alt)) global.tool_selected = TOOL_ID.brush
 		
-		if (region_selected != hovered && MOUSE_PRESSED_LEFT) level.focus_region(hovered)
-		else if (region_selected) {
+		if (region_selected != hovered && MOUSE_PRESSED_LEFT) {
+			level.focus_region(hovered)
+			app_push_history(HISTORY_NOTE_ROOM_SELECTED)
+		} else if (region_selected) {
 			var editing = false
 			
 			// tool selection

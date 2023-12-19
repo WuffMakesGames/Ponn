@@ -8,4 +8,7 @@ if (pressed_any && point_in_rectangle(tile_x,tile_y,0,0,region_selected.width,re
 }
 
 // reset
-global.interaction_state = pressed_any ? INTERACTION_STATE.editing : INTERACTION_STATE.free
+if (!pressed_any) {
+	app_push_history(HISTORY_NOTE_ROOM_CHANGED)
+	global.interaction_state = INTERACTION_STATE.free
+}

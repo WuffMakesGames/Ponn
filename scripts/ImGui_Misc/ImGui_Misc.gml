@@ -89,7 +89,7 @@ enum ImGuiKey
     RightCtrl, RightShift, RightAlt, RightSuper,
     Menu,
     ImGuiKey_0, ImGuiKey_1, ImGuiKey_2, ImGuiKey_3, ImGuiKey_4, ImGuiKey_5, ImGuiKey_6, ImGuiKey_7, ImGuiKey_8, ImGuiKey_9,
-    A, B, C, D, E, F, G, H, I, J,
+    A, B, C, D, E, F, G, H, I, ii,
     K, L, M, N, O, P, Q, R, S, T,
     U, V, W, X, Y, Z,
     F1, F2, F3, F4, F5, F6,

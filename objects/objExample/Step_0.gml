@@ -211,10 +211,10 @@ if (main_open) {
 				
 				for(var i = 0; i < 5; i++) {
 					imgui.TableNextRow();
-					for(var j = 0; j < 3; j++) {
-						imgui.TableSetColumnIndex(j);
-						imgui.TableSetBgColor(ImGuiTableBgTarget.CellBg, make_color_hsv(255 * ((i + j) / 8), 128, 255), j);
-						imgui.Text("Hello " + string(i + j));
+					for(var ii = 0; ii < 3; ii++) {
+						imgui.TableSetColumnIndex(ii);
+						imgui.TableSetBgColor(ImGuiTableBgTarget.CellBg, make_color_hsv(255 * ((i + ii) / 8), 128, 255), ii);
+						imgui.Text("Hello " + string(i + ii));
 					}
 				}
 				

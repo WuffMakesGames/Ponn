@@ -84,8 +84,8 @@ function everthorn_load_level(level_id) {
 		//.set_padding(2)
 		
 		everthorn_create_room_button(rooms_list,_rooms[i],i)
-		//for (var j = i; j < min(i+3, _length); j++) {
-		//	everthorn_create_room_button(_list,_rooms[j],j)
+		//for (var ii = i; ii < min(i+3, _length); ii++) {
+		//	everthorn_create_room_button(_list,_rooms[ii],ii)
 		//}
 		//if (i < _length-1) everthorn_create_room_button(_list,_rooms[i+1],i+1)
 	}

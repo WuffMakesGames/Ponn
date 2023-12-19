@@ -9,10 +9,15 @@ event_user(15)
 // elements
 imgui_toolbar()
 
-if (window_level_open) window_level_open = imgui_levels(window_panels_flags)
-if (window_settings_open) window_settings_open = imgui_settings(window_panels_flags)
-if (window_tilemap_open) window_tilemap_open = imgui_tilemap(window_panels_flags)
-if (window_triggers_open) window_triggers_open = imgui_triggers(window_panels_flags)
+window_level_open = imgui_open_window(window_level_open,imgui_levels)
+window_settings_open = imgui_open_window(window_settings_open,imgui_settings)
+window_tilemap_open = imgui_open_window(window_tilemap_open,imgui_tilemap)
+window_triggers_open = imgui_open_window(window_triggers_open,imgui_triggers)
+window_history_open = imgui_open_window(window_history_open,imgui_history)
 
 // editor
 global.ui_hover = imgui.WantMouseCapture()
+
+// history
+global.app_history_can_undo = global.app_history_pos >= 1
+global.app_history_can_redo = global.app_history_pos < array_length(global.app_history)-1

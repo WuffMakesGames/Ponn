@@ -3869,7 +3869,7 @@ function imgui() constructor {
 			var list_count = buffer_read(__CmdBuffer, buffer_u32);
 			for(var i = 0; i < list_count; i++) {
 				var cmd_count = buffer_read(__CmdBuffer, buffer_u32);
-				for(var j = 0; j < cmd_count; j++) {
+				for(var ii = 0; ii < cmd_count; ii++) {
 					if (!buffer_read(__CmdBuffer, buffer_bool)) { // UserCallback != nullptr
 						var tex_data = buffer_read(__CmdBuffer, buffer_u32);
 						var tex_id = -1;
@@ -4018,7 +4018,7 @@ global.__IMGUI_MAPPING[ImGuiKey.F] = ord("F");
 global.__IMGUI_MAPPING[ImGuiKey.G] = ord("G");
 global.__IMGUI_MAPPING[ImGuiKey.H] = ord("H");
 global.__IMGUI_MAPPING[ImGuiKey.I] = ord("I");
-global.__IMGUI_MAPPING[ImGuiKey.J] = ord("J");
+global.__IMGUI_MAPPING[ImGuiKey.ii] = ord("ii");
 global.__IMGUI_MAPPING[ImGuiKey.K] = ord("K");
 global.__IMGUI_MAPPING[ImGuiKey.L] = ord("L");
 global.__IMGUI_MAPPING[ImGuiKey.M] = ord("M");

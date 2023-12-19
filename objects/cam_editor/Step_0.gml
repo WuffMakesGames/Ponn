@@ -44,14 +44,10 @@ if (mouse_wheel != 0 && !global.ui_hover) {
 	cam_zoom -= (mouse_wheel * 0.25) * cam_zoom
 	cam_zoom = clamp(cam_zoom, cam_zoom_min, cam_zoom_max)
 
-	show_debug_message(cam_zoom)
-	show_debug_message(global.camera_zoom)
-
-	if (cam_zoom != last_zoom) {
+	//if (cam_zoom != last_zoom) {
 		//global.camera_x += -mouse_wheel * (device_mouse_x_to_gui(0) / cam_zoom - global.camera_x) * 0.1
 		//global.camera_y += -mouse_wheel * (device_mouse_y_to_gui(0) / cam_zoom - global.camera_y) * 0.1
-	}
-	
+	//}
 }
 
 global.camera_zoom = floor(cam_zoom / 0.25) * 0.25

@@ -7,7 +7,7 @@ function split(str,separator=",",convert_numbers=true) {
 		var pos_end = string_pos_ext(separator,str,pos+1)
 		var value = string_copy(str,pos,pos_end-pos)
 		
-		array_push(array,convert_numbers && digits(value) == value ? real(value) : value)
+		array_push(array,convert_numbers && string_count(".",value) <= 1 && digits(value) == value ? real(value) : value)
 		pos = pos_end + 1
 	}
 	return array

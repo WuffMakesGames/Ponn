@@ -4,83 +4,53 @@ function everhorn_parse_levels(data) {
 	
 	// search for everhorn/newlestehorn data - don't load config, we don't support it
 	var mapdata, camera_triggers;
-	var flag_begin = string_pos("@begin",lua), flag_end = string_pos("--@end",lua)
+	var flag_config = string_pos("--@conf",lua)
+	var flag_begin = string_pos("--@begin",lua)
+	var flag_end = string_pos("--@end",lua)
+	
 	var format_exists = flag_begin && flag_end
 	
 	// exit
 	if (!format_exists) return -1
 	
 	// load data
-	var region_data = []
-	camera_triggers = []
+	var sandbox = lua_state_create()
+	lua_add_code(sandbox, string_copy(lua,flag_begin,flag_end-flag_begin))
+	
+	lua_add_code(sandbox,@"
+	function fill_mapdata()
+		if not mapdata then return end
+		for i = 1,#levels do
+			if not mapdata[i] then mapdata[i] = -1 end
+		end
+	end")
+	lua_call(sandbox,"fill_mapdata")
+	
+	var level_table = lua_global_get(sandbox,"levels")
+	var mapdata_table = lua_global_get(sandbox,"mapdata")
+	
+	// convert data
+	for (var i = 0; i < array_length(level_table); i++) {
+		level_table[i] = split(level_table[i],",")
+	}
+	for (var i = 0; i < array_length(mapdata_table); i++) {
+		var mapdata = mapdata_table[i]
+		var output = []
+		var pos = 1
 		
-	// load levels table
-	var codestring = string_copy(lua,flag_begin,flag_end-flag_begin)
-		
-	var level_table = string_pos("levels={",codestring)
-	var level_table_end = string_pos_ext("}",codestring,level_table)+1
-		
-	if (level_table) {
-		var level_string = string_copy(codestring,level_table,level_table_end-level_table)
-		var pos = string_pos_ext("\"",level_string,1)+1
-			
-		while (pos <= string_length(level_string) && pos > 1) {
-			var line_end = string_pos_ext("\"",level_string,pos+1)
-			var line = string_replace_all(string_copy(level_string,pos,line_end-pos), "\"", "")
-				
-			pos = string_pos_ext("\"",level_string,line_end+2)+1
-			array_push(region_data,split(line))
+		if (!is_string(mapdata)) continue;
+		while (pos < string_length(mapdata)-1) {
+			array_push(output, from_hex(string_copy(mapdata,pos,2)))
+			pos += 2
 		}
+		mapdata_table[i] = output
 	}
 	
-	// load mapdata
-	var mapdata_table = string_pos("mapdata={",codestring)
-	var mapdata_table_end = string_pos_ext("}",codestring,mapdata_table)+1
-	mapdata = array_create(array_length(region_data),-1)
-		
-	if (mapdata_table) {
-		var mapstring = string_copy(codestring,mapdata_table,mapdata_table_end-mapdata_table)
-		mapstring = string_replace_all(mapstring," ","")
-		mapstring = string_replace_all(mapstring,"\t","")
-		mapstring = string_replace_all(mapstring,"\n","")
-		mapstring = string_replace(mapstring,"mapdata={","")
-		mapstring = string_replace(mapstring,"}","")
-			
-		// parse data
-		var lines = split(mapstring,",")
-		for (var i = 0; i < array_length(lines); i++) {
-			var line = lines[i]
-			var index = i
-				
-			var is_hex = true
-			var hex = ""
-				
-			// parse line
-			if (line == "nil") continue;
-			if (string_starts_with(line,"[")) {
-				index = real(string_copy(line,2,string_pos("]",line)-2))-1
-			}
-				
-			// find data
-			var string_start = string_pos("\"",line)+1
-			var string_end = string_last_pos("\"",line)
-				
-			// parse hex data
-			if (is_hex) {
-				mapdata[index] = []
-				hex = string_copy(line,string_start,string_end-string_start)
-				for (var j = 1; j < string_length(hex); j += 2) {
-					array_push(mapdata[index], from_hex(string_copy(hex,j,2)))
-				}
-			}
-		}
-	}
-		
 	// convert data to rooms
-	for (var i = 0; i < array_length(region_data); i++) {
-		var current_data = region_data[i]
+	for (var i = 0; i < array_length(level_table); i++) {
+		var current_data = level_table[i]
 		var width = current_data[2]*16, height = current_data[3]*16
-			
+	
 		var left = current_data[0]*16
 		var top = current_data[1]*16
 		var right = left + width
@@ -89,13 +59,14 @@ function everhorn_parse_levels(data) {
 		var region = new EverthornRegion(left,top,width,height)
 			
 		// load mapdata
-		if (mapdata[i] != -1) {
-			for (var j = 0; j < array_length(mapdata[i]); j++) {
-				var tile_x = j % width
-				var tile_y = floor(j / width)
-				region.set_tile(tile_x,tile_y,mapdata[i][j])
+		var mapdata = mapdata_table[i]
+		if (mapdata != -1) {
+			for (var ii = 0; ii < array_length(mapdata); ii++) {
+				var tile_x = ii % width
+				var tile_y = floor(ii / width)
+				region.set_tile(tile_x,tile_y,mapdata[ii])
 			}
-			
+		
 		// take from map
 		} else { 
 			for (var tx = left; tx < right; tx++) {

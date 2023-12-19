@@ -13,51 +13,43 @@ function imgui_settings_room(){
 			
 	// x position
 	imgui.PushButtonRepeat(true)
-	if (imgui.ArrowButton("rm_x_minus",ImGuiDir.Left)) region.x -= 1 imgui.SameLine()
-	if (imgui.ArrowButton("rm_x_plus",ImGuiDir.Right)) region.x += 1 imgui.SameLine()
+	if (imgui.ArrowButton("rm_x_minus",ImGuiDir.Left)) region.shift_position(-1,0) imgui.SameLine()
+	if (imgui.ArrowButton("rm_x_plus",ImGuiDir.Right)) region.shift_position(1,0) imgui.SameLine()
 	imgui.PopButtonRepeat()
 			
 	imgui.SetNextItemWidth(150)
-	region.x = imgui.InputInt("X Position",region.x,0,0)
-			
-	// x position
-	imgui.PushButtonRepeat(true)
-	if (imgui.ArrowButton("rm_y_minus",ImGuiDir.Left)) region.y -= 1 imgui.SameLine()
-	if (imgui.ArrowButton("rm_y_plus",ImGuiDir.Right)) region.y += 1 imgui.SameLine()
-	imgui.PopButtonRepeat()
-			
-	imgui.SetNextItemWidth(150)
-	region.y = imgui.InputInt("Y Position",region.y,0,0)
-			
+	var input_x = imgui.InputInt("X Position",region.x,0,0)
+	region.set_x(input_x)
+	
 	// y position
-	//imgui.PushButtonRepeat(true)
-	//if (imgui.ArrowButton("rm_w_minus",ImGuiDir.Left)) region.resize(region.width-1,region.height) imgui.SameLine()
-	//if (imgui.ArrowButton("rm_w_plus",ImGuiDir.Right)) region.resize(region.width+1,region.height) imgui.SameLine()
-	//imgui.PopButtonRepeat()
-			
-	//imgui.SetNextItemWidth(150)
-	//var drag_w = imgui.InputInt("Width",region.width,0,0)
-	//region.resize(drag_w,region.height)
+	imgui.PushButtonRepeat(true)
+	if (imgui.ArrowButton("rm_y_minus",ImGuiDir.Left)) region.shift_position(0,-1) imgui.SameLine()
+	if (imgui.ArrowButton("rm_y_plus",ImGuiDir.Right)) region.shift_position(0,1) imgui.SameLine()
+	imgui.PopButtonRepeat()
+	
+	imgui.SetNextItemWidth(150)
+	var input_y = imgui.InputInt("Y Position",region.y,0,0)
+	region.set_y(input_y)
 			
 	// width
 	imgui.PushButtonRepeat(true)
-	if (imgui.ArrowButton("rm_w_minus",ImGuiDir.Left)) region.resize(region.width-1,region.height) imgui.SameLine()
-	if (imgui.ArrowButton("rm_w_plus",ImGuiDir.Right)) region.resize(region.width+1,region.height) imgui.SameLine()
+	if (imgui.ArrowButton("rm_w_minus",ImGuiDir.Left)) region.set_size(region.width-1,region.height) imgui.SameLine()
+	if (imgui.ArrowButton("rm_w_plus",ImGuiDir.Right)) region.set_size(region.width+1,region.height) imgui.SameLine()
 	imgui.PopButtonRepeat()
 			
 	imgui.SetNextItemWidth(150)
 	var input_w = imgui.InputInt("Width",region.width)
-	region.resize(input_w,region.height)
+	region.set_size(input_w,region.height)
 			
 	// height
 	imgui.PushButtonRepeat(true)
-	if (imgui.ArrowButton("rm_h_minus",ImGuiDir.Left)) region.resize(region.width,region.height-1) imgui.SameLine()
-	if (imgui.ArrowButton("rm_h_plus",ImGuiDir.Right)) region.resize(region.width,region.height+1) imgui.SameLine()
+	if (imgui.ArrowButton("rm_h_minus",ImGuiDir.Left)) region.set_height(region.height-1) imgui.SameLine()
+	if (imgui.ArrowButton("rm_h_plus",ImGuiDir.Right)) region.set_height(region.height+1) imgui.SameLine()
 	imgui.PopButtonRepeat()
 			
 	imgui.SetNextItemWidth(150)
 	var input_h = imgui.InputInt("Height",region.height)
-	region.resize(region.width,input_h)
+	region.set_height(input_h)
 			
 	// settings
 	for (var i = 0; i < array_length(global.app_state.room_parameters); i++) {
