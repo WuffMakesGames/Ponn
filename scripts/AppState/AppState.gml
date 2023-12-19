@@ -1,15 +1,16 @@
 function AppState() constructor {
 	
 	// variables
+	file_name = ""
 	project_loaded_data = -1
-	project_levels = []
-	project_spritesheet = static_default_spritesheet
-	
 	room_parameters = []
 
 	level_selected = 0
 	region_selected = noone
 	region_selected_id = -1
+	
+	project_levels = []
+	project_spritesheet = static_default_spritesheet
 	
 	// public
 	function save_state() {
@@ -28,6 +29,7 @@ function AppState() constructor {
 	function load_state(json) {
 		var state = json_parse(json)
 		
+		file_name = state.file_name
 		project_loaded_data = state.project_loaded_data
 		room_parameters = state.room_parameters
 		
