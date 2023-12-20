@@ -8,8 +8,10 @@ function pico_parse_levels(data) {
 	if (everthorn != -1) levels = everthorn
 	if (everhorn != -1) array_push(levels, everhorn)
 	
+	show_debug_message(levels)
+	
 	// empty level data
-	if (!everthorn && !everhorn) {
+	if (everthorn == -1 && everhorn == -1) {
 		var level = new EverthornLevel()
 		array_push(levels, level)
 		

@@ -1,7 +1,7 @@
 {
   "resourceType": "GMScript",
   "resourceVersion": "1.0",
-  "name": "everthorn_parse_levels",
+  "name": "pico_generate_rooms",
   "isCompatibility": false,
   "isDnD": false,
   "parent": {

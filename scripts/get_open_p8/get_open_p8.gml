@@ -12,7 +12,7 @@ function get_open_p8() {
 			global.app_state.project_loaded_data = -1
 			global.app_state.project_levels = []
 			global.app_state.project_spritesheet = static_default_spritesheet
-			global.app_sate.file_name = ""
+			global.app_state.file_name = ""
 			show_debug_message(error.longMessage)
 			show_debug_message("Project failed to open")
 		}
