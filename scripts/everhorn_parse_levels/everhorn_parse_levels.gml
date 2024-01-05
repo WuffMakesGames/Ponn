@@ -1,7 +1,7 @@
 function everhorn_parse_levels(data) {
 	var lua = data.lua
 	
-	// search for everhorn/newlestehorn data - don't load config, we don't support it
+	// search for everhorn/newlestehorn data
 	var flag_config = string_pos("--@conf",lua)
 	var flag_begin = string_pos("--@begin",lua)
 	var flag_end = string_pos("--@end",lua)
@@ -39,6 +39,5 @@ function everhorn_parse_levels(data) {
 	}
 	
 	// generate rooms
-	var level = pico_generate_rooms(data,level_table,mapdata_table)
-	return level
+	return pico_generate_level(data,level_table,mapdata_table)
 }

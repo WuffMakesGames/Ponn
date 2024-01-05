@@ -15,7 +15,7 @@ function imgui_levels(window_flags) {
 			
 			for (var ii = 0; ii < array_length(regions); ii++) {
 				var region = regions[ii]
-				var label = "Region " + string(ii)
+				var label = "Region " + string_concat(i,"-",ii)
 				
 				imgui.Spacing()
 				imgui_align_for_width(192)

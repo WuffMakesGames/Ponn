@@ -1,6 +1,4 @@
 /// @description 
-//global.camera_zoom += (global.camera_zoom_target - global.camera_zoom)*0.5
-
 var cursor_x = device_mouse_x_to_gui(0) / cam_zoom
 var cursor_y = device_mouse_y_to_gui(0) / cam_zoom
 
@@ -43,11 +41,6 @@ var last_zoom = cam_zoom
 if (mouse_wheel != 0 && !global.ui_hover) {
 	cam_zoom -= (mouse_wheel * 0.25) * cam_zoom
 	cam_zoom = clamp(cam_zoom, cam_zoom_min, cam_zoom_max)
-
-	//if (cam_zoom != last_zoom) {
-		//global.camera_x += -mouse_wheel * (device_mouse_x_to_gui(0) / cam_zoom - global.camera_x) * 0.1
-		//global.camera_y += -mouse_wheel * (device_mouse_y_to_gui(0) / cam_zoom - global.camera_y) * 0.1
-	//}
 }
 
 global.camera_zoom = floor(cam_zoom / 0.25) * 0.25
@@ -61,6 +54,3 @@ camera_set_view_pos(CAM_DEFAULT, camera_x, camera_y)
 
 global.camera_frac_x = frac(camera_x)
 global.camera_frac_y = frac(camera_y)
-
-//show_debug_message(string_concat("Camera X: ", global.camera_x, " - Camera Y:", global.camera_y))
-//show_debug_message(string_concat("Frac X: ", global.camera_frac_x, " - Frac Y:", global.camera_frac_y))

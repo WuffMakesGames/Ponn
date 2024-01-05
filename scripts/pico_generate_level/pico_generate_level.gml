@@ -11,7 +11,7 @@ function pico_generate_level(data,table,mapdata) {
 			
 		// load mapdata
 		var hex = mapdata[i]
-		if (hex != -1) {
+		if (is_array(hex)) {
 			for (var ii = 0; ii < array_length(hex); ii++) {
 				var tile_x = ii % width
 				var tile_y = floor(ii / width)
